@@ -143,6 +143,16 @@ module.exports = class ReactSelectize extends React.Component
                     if !@props.open
                         cancel-event e
 
+                on-touch-start: (e) ~>
+                    do ~>
+                        <~ @props.on-anchor-change last @props.values
+                        <~ @on-open-change true
+
+                    # avoid cancelling the event when the dropdown is already open
+                    # as this would block selection of text in the search field
+                    if !@props.open
+                        cancel-event e
+
                 if @props.search.length == 0 and @props.values.length == 0
 
                     # PLACEHOLDER
